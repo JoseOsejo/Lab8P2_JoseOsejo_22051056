@@ -5,15 +5,22 @@
  */
 package carrerasdiscovery;
 
+import java.awt.Color;
+import java.util.Random;
+
 /**
  *
  * @author jcoq2
  */
 public class McQueen extends Auto
 {
-
-    public McQueen() {
+    private Random rand = new Random();
+    int randomNumber = rand.nextInt(190-30)+30;
+    public McQueen(int numeroIdentificador,int distanciaRecorrida,String nombreCorredor, Color color) {
+        super(numeroIdentificador, randomNumber, nombreCorredor, color);
     }
+    
+    
     
     
 }

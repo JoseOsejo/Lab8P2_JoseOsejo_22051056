@@ -16,13 +16,13 @@ public class Auto implements Serializable
 {
 
     private int numeroIdentificador;/*tiene que ser unico*/
-    private double distanciaRecorrida;
+    private int distanciaRecorrida;
     private String nombreCorredor;
     private Color color;
 
     private static final long SerialVersionUID = 783L;
 
-    public Auto(int numeroIdentificador, double distanciaRecorrida, String nombreCorredor, Color color) {
+    public Auto(int numeroIdentificador, int distanciaRecorrida, String nombreCorredor, Color color) {
         this.numeroIdentificador = numeroIdentificador;
         this.distanciaRecorrida = distanciaRecorrida;
         this.nombreCorredor = nombreCorredor;
@@ -41,7 +41,7 @@ public class Auto implements Serializable
         return distanciaRecorrida;
     }
 
-    public void setDistanciaRecorrida(double distanciaRecorrida) {
+    public void setDistanciaRecorrida(int distanciaRecorrida) {
         this.distanciaRecorrida = distanciaRecorrida;
     }
 
