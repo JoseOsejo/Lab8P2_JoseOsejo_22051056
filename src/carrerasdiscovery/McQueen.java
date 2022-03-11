@@ -9,6 +9,11 @@ package carrerasdiscovery;
  *
  * @author jcoq2
  */
-public class McQueen {
+public class McQueen extends Auto
+{
+
+    public McQueen() {
+    }
+    
     
 }
