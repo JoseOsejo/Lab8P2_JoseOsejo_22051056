@@ -15,9 +15,21 @@ import java.util.Random;
 public class McQueen extends Auto
 {
     private Random rand = new Random();
-    int randomNumber = rand.nextInt(190-30)+30;
-    public McQueen(int numeroIdentificador,int distanciaRecorrida,String nombreCorredor, Color color) {
-        super(numeroIdentificador, randomNumber, nombreCorredor, color);
+    public McQueen(int numeroIdentificador,String nombreCorredor, Color color) {
+        super(numeroIdentificador,3, nombreCorredor, color);
+    }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public void setRand(Random rand) {
+        this.rand = rand;
+    }
+
+    @Override
+    public int distanciaRecorrida() {
+        return rand.nextInt(190-30)+30;
     }
     
     

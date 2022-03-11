@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author jcoq2
  */
-public class Auto implements Serializable
+public abstract class Auto implements Serializable
 {
 
     private int numeroIdentificador;/*tiene que ser unico*/
@@ -66,6 +66,7 @@ public class Auto implements Serializable
         return "Auto{" + "numeroIdentificador=" + numeroIdentificador + ", distanciaRecorrida=" + distanciaRecorrida + ", nombreCorredor=" + nombreCorredor + ", color=" + color + '}';
     }
 
+    public abstract int distanciaRecorrida();
     
     
 }
