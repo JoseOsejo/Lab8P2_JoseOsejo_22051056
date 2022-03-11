@@ -57,7 +57,7 @@ public class ManejoAuto {
                 f = new FileInputStream(archivo);
                 o = new ObjectInputStream(f);
                 try {
-                    while ((autoTemp = (Auto) o.readObject()) != null) {
+                    while ((autoTemp = (Auto) o.readObject()) != null && numeroIdentificadorUnico(autoTemp.getNumeroIdentificador())) {
                         listaAutos.add(autoTemp);
                     }
                 } catch (EOFException e) {
@@ -75,6 +75,15 @@ public class ManejoAuto {
         }
     }
     
+    private boolean numeroIdentificadorUnico(int numeroIdentificador)
+    {
+     for(Auto auto: listaAutos){
+         if(auto.getNumeroIdentificador() == numeroIdentificador){
+             return true;
+         }
+     }
+        return false;
+    }
     
      public void escribirArchivoAuto(){
         FileOutputStream f = null;
