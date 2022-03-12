@@ -100,11 +100,6 @@ public class TablaDeCarreras implements Runnable
     public void run() {
         while (comenzarCarrera) {
             if (progresar) {
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
-                }
                 for (int i = 0; i < tablaCarrera.getRowCount(); i++) {
                     String n = (String) tablaCarrera.getValueAt(i, 1);
                     System.out.println("id " + n);
@@ -115,6 +110,11 @@ public class TablaDeCarreras implements Runnable
                             break;
                         }
                     }
+                     try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
                 }
                 //actualizar la tabla de las careras
                 actualizarTablaCarrera();
