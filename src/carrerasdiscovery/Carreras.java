@@ -54,7 +54,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         pistaLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         largoLabel = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        barraCarrera = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCarrera = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
@@ -86,7 +86,14 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(102, 255, 51));
+
         jButton1.setText("Comenzar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Pausar");
 
@@ -125,6 +132,11 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         });
 
         jButton4.setText("Reiniciar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Guardar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -207,7 +219,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(barraCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -238,7 +250,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
                             .addComponent(jLabel3)
                             .addComponent(largoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(33, 33, 33)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(barraCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -374,7 +386,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         DefaultTableModel modeloTabla = (DefaultTableModel) tablaCarrera.getModel();
         int numeroTempoIdentificador = 0;
         for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-            numeroTempoIdentificador = (Integer) modeloTabla.getValueAt(i,0);
+            numeroTempoIdentificador = (Integer) modeloTabla.getValueAt(i, 0);
             if (numeroTempoIdentificador == auto.getNumeroIdentificador()) {
                 return true;
             }
@@ -406,9 +418,21 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) tablaCarrera.getModel();
+dtm.setRowCount(0);
+        
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -443,6 +467,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> autosCB;
+    private javax.swing.JProgressBar barraCarrera;
     private javax.swing.JButton colorButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -458,7 +483,6 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel largoLabel;
     private javax.swing.JTextField largoPistaTF;

@@ -39,7 +39,7 @@ public class Auto implements Serializable
         this.numeroIdentificador = numeroIdentificador;
     }
 
-    public double getDistanciaRecorrida() {
+    public int getDistanciaRecorrida() {
         return distanciaRecorrida;
     }
 
