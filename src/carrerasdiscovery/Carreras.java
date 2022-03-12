@@ -6,7 +6,10 @@
 package carrerasdiscovery;
 
 import java.awt.Color;
+import java.io.Serializable;
+import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
@@ -14,19 +17,22 @@ import javax.swing.JOptionPane;
  *
  * @author jcoq2
  */
-public class Carreras extends javax.swing.JFrame {
+public class Carreras extends javax.swing.JFrame implements Serializable {
 
     /**
      * Creates new form Carreras
      */
     public Carreras() {
-        
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        ManejoAuto manejoAuto = new ManejoAuto(ruta);
+        manejoAuto.leerArchivoAuto();
+        agregarCarroCB();
         tipoAutoCB.addItem("McQueen");
         tipoAutoCB.addItem("Convertible");
         tipoAutoCB.addItem("Nascar");
+        colorButton.setBackground(colorCorredor);
         
     }
 
@@ -56,10 +62,10 @@ public class Carreras extends javax.swing.JFrame {
         colorButton = new javax.swing.JButton();
         tipoAutoCB = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombreCorredorTF = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        numeroIdentificadorTF = new javax.swing.JTextField();
+        autosCB = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         nombrePistaTF = new javax.swing.JTextField();
@@ -120,6 +126,11 @@ public class Carreras extends javax.swing.JFrame {
         jButton4.setText("Reiniciar");
 
         jButton5.setText("Guardar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         colorButton.setText("Color");
         colorButton.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +141,7 @@ public class Carreras extends javax.swing.JFrame {
 
         jLabel5.setText("Nombre Corredor");
 
-        jLabel6.setText("Nombre Identificador");
+        jLabel6.setText("Numero Identificador");
 
         jButton7.setText("Agregar");
 
@@ -167,15 +178,15 @@ public class Carreras extends javax.swing.JFrame {
                                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(34, 34, 34))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombreCorredorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numeroIdentificadorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(autosCB, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -226,7 +237,7 @@ public class Carreras extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(autosCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton7))
                         .addGap(19, 19, 19))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -241,11 +252,11 @@ public class Carreras extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(numeroIdentificadorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreCorredorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -273,34 +284,85 @@ public class Carreras extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void largoPistaTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_largoPistaTFActionPerformed
-        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_largoPistaTFActionPerformed
 
     private void colorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorButtonActionPerformed
         JColorChooser colorChooser = new JColorChooser();
         Color color = JColorChooser.showDialog(null, "Seleccione un color", Color.black);
-        colorButton.setBackground(color );
+        colorButton.setBackground(color);
         // TODO add your handling code here:
     }//GEN-LAST:event_colorButtonActionPerformed
 
+    private void agregarCarroCB() {
+        ManejoAuto manejoAuto = new ManejoAuto(ruta);
+        manejoAuto.leerArchivoAuto();
+        ArrayList<Auto> listaAutos = manejoAuto.getListaAutos();
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        for (Auto auto : listaAutos) {
+            modelo.addElement(auto.getNumeroIdentificador());
+        }
+        autosCB.setModel(modelo);
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try{
-            if(nombrePistaTF.getText().equals("") == false && largoPistaTF.getText().equals("") == false){                
+        try {
+            if (nombrePistaTF.getText().isEmpty() == false && largoPistaTF.getText().isEmpty() == false) {
                 largoPista = Integer.parseInt(largoPistaTF.getText());
-                largoLabel.setText(" "+largoPista);
-                pistaLabel.setText( nombrePistaTF.getText());
+                largoLabel.setText(" " + largoPista);
+                pistaLabel.setText(nombrePistaTF.getText());
                 JOptionPane.showMessageDialog(null, "Se guardo la pista!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Tiene Rellenar los Campos");
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error con el largo!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         nombrePistaTF.setText("");
         largoPistaTF.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+    private boolean numeroIdentificadorUnico(int numeroIdentificado) {
+        ManejoAuto manejoAuto = new ManejoAuto(ruta);
+        manejoAuto.leerArchivoAuto();
+        ArrayList<Auto> listaAutos = manejoAuto.getListaAutos();
+        for (Auto auto : listaAutos) {
+            if (auto.getNumeroIdentificador() == numeroIdentificado) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+
+            ManejoAuto manejoAuto = new ManejoAuto(ruta);
+            int numeroIdentificado = Integer.parseInt(numeroIdentificadorTF.getText());
+            if (nombreCorredorTF.getText().isEmpty() == false && numeroIdentificadorTF.getText().isEmpty() == false && numeroIdentificadorUnico(numeroIdentificado) == false) {
+                Auto auto = null;
+                if (((String) tipoAutoCB.getSelectedItem()).equalsIgnoreCase("McQueen")) {
+                    auto = new McQueen(numeroIdentificado, nombreCorredorTF.getText(), colorCorredor);
+                } else if (((String) tipoAutoCB.getSelectedItem()).equalsIgnoreCase("Convertible")) {
+                    auto = new Convertible(numeroIdentificado, nombreCorredorTF.getText(), colorCorredor);
+                } else if (((String) tipoAutoCB.getSelectedItem()).equalsIgnoreCase("Nascar")) {
+                    auto = new Nascar(numeroIdentificado, nombreCorredorTF.getText(), colorCorredor);
+                }
+                manejoAuto.leerArchivoAuto();
+                manejoAuto.setAuto(auto);
+                manejoAuto.escribirArchivoAuto();
+            } else if (numeroIdentificadorTF.getText().isEmpty() == false && nombreCorredorTF.getText().isEmpty() == false && numeroIdentificadorUnico(numeroIdentificado) == true) {
+                JOptionPane.showMessageDialog(null, "Ya existe el numero!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Completar los campos!");
+            }
+            agregarCarroCB();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        numeroIdentificadorTF.setText("");
+        nombreCorredorTF.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,6 +400,7 @@ public class Carreras extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> autosCB;
     private javax.swing.JButton colorButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -345,7 +408,6 @@ public class Carreras extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -357,14 +419,15 @@ public class Carreras extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel largoLabel;
     private javax.swing.JTextField largoPistaTF;
+    private javax.swing.JTextField nombreCorredorTF;
     private javax.swing.JTextField nombrePistaTF;
+    private javax.swing.JTextField numeroIdentificadorTF;
     private javax.swing.JLabel pistaLabel;
     private javax.swing.JComboBox<String> tipoAutoCB;
     // End of variables declaration//GEN-END:variables
-private  String [] tipoAuto = {"McQueen","Convertible","Nascar"};
-private int largoPista = 0;
+    private int largoPista = 0;
+    private Color colorCorredor = Color.blue;
+    private String ruta = "./autos.osj";
 }

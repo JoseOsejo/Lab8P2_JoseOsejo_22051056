@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author jcoq2
  */
-public abstract class Auto implements Serializable
+public class Auto implements Serializable
 {
 
     private int numeroIdentificador;/*tiene que ser unico*/
@@ -22,13 +22,15 @@ public abstract class Auto implements Serializable
 
     private static final long SerialVersionUID = 783L;
 
-    public Auto(int numeroIdentificador, int distanciaRecorrida, String nombreCorredor, Color color) {
+    public Auto(int numeroIdentificador,String nombreCorredor, Color color) {
         this.numeroIdentificador = numeroIdentificador;
-        this.distanciaRecorrida = distanciaRecorrida;
         this.nombreCorredor = nombreCorredor;
         this.color = color;
     }
 
+    public Auto(){
+        
+    }
     public int getNumeroIdentificador() {
         return numeroIdentificador;
     }
@@ -66,7 +68,9 @@ public abstract class Auto implements Serializable
         return "Auto{" + "numeroIdentificador=" + numeroIdentificador + ", distanciaRecorrida=" + distanciaRecorrida + ", nombreCorredor=" + nombreCorredor + ", color=" + color + '}';
     }
 
-    public abstract int distanciaRecorrida();
+    public  int distanciaRecorrida(){
+        return 0;
+    }
     
     
 }

@@ -16,8 +16,8 @@ public class Convertible extends Auto
 {
 
     Random r = new Random();
-    public Convertible(int numeroIdentificador, int distanciaRecorrida, String nombreCorredor, Color color) {
-        super(numeroIdentificador, distanciaRecorrida, nombreCorredor, color);
+    public Convertible(int numeroIdentificador, String nombreCorredor, Color color) {
+        super(numeroIdentificador, nombreCorredor, color);
     }
 
     @Override

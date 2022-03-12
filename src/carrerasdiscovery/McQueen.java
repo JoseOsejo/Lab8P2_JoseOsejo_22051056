@@ -16,7 +16,7 @@ public class McQueen extends Auto
 {
     private Random rand = new Random();
     public McQueen(int numeroIdentificador,String nombreCorredor, Color color) {
-        super(numeroIdentificador,3, nombreCorredor, color);
+        super(numeroIdentificador,nombreCorredor, color);
     }
 
     public Random getRand() {

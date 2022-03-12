@@ -16,8 +16,8 @@ public class Nascar extends Auto
 {
     Random r = new Random();
     
-    public Nascar(int numeroIdentificador, int distanciaRecorrida, String nombreCorredor, Color color) {
-        super(numeroIdentificador, distanciaRecorrida, nombreCorredor, color);
+    public Nascar(int numeroIdentificador, String nombreCorredor, Color color) {
+        super(numeroIdentificador, nombreCorredor, color);
     }
 
     @Override

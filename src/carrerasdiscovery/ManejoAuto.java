@@ -8,11 +8,13 @@ package carrerasdiscovery;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,65 +49,48 @@ public class ManejoAuto {
         this.listaAutos = listaAutos;
     }
 
-    public void leerArchivoAuto() throws ClassNotFoundException {
-        listaAutos = new ArrayList();
-        FileInputStream f = null;
-        ObjectInputStream o = null;
-        Auto autoTemp;
-        try {
-            if (archivo.exists()) {
-                f = new FileInputStream(archivo);
-                o = new ObjectInputStream(f);
-                try {
-                    while ((autoTemp = (Auto) o.readObject()) != null && numeroIdentificadorUnico(autoTemp.getNumeroIdentificador())) {
-                        listaAutos.add(autoTemp);
+    public void leerArchivoAuto() {
+       try{
+            listaAutos = new ArrayList();
+            if(archivo.exists()){                
+                FileInputStream f = new FileInputStream(archivo);
+                ObjectInputStream o = new ObjectInputStream(f);
+                try{
+                    while(true){
+                        listaAutos.add(((Auto) o.readObject()));
                     }
-                } catch (EOFException e) {
-                    e.printStackTrace();
+                }catch(EOFException e){
+                    // e.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                   JOptionPane.showMessageDialog(null, ex);
                 }
+                o.close();
+                f.close();            
             }
-        } catch (IOException io) {
+        }catch(IOException io){
             io.printStackTrace();
         }
-        try {
-            o.close();
-            f.close();
-        } catch (Exception e) {
+    }
+    
 
-        }
-    }
-    
-    private boolean numeroIdentificadorUnico(int numeroIdentificador)
-    {
-     for(Auto auto: listaAutos){
-         if(auto.getNumeroIdentificador() == numeroIdentificador){
-             return true;
-         }
-     }
-        return false;
-    }
-    
-     public void escribirArchivoAuto(){
+    public void escribirArchivoAuto() {
         FileOutputStream f = null;
         ObjectOutputStream o = null;
-        try{
+        try {
             f = new FileOutputStream(archivo);
             o = new ObjectOutputStream(f);
             for (Auto auto : listaAutos) {
                 o.writeObject(auto);
             }
             o.flush();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        try{            
+        try {
             o.close();
             f.close();
-        }catch(Exception e){
+        } catch (Exception e) {
         }
     }
-    
-    
-    
 
 }
