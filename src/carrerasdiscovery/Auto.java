@@ -65,7 +65,7 @@ public class Auto implements Serializable
 
     @Override
     public String toString() {
-        return "Auto{" + "numeroIdentificador=" + numeroIdentificador + ", distanciaRecorrida=" + distanciaRecorrida + ", nombreCorredor=" + nombreCorredor + ", color=" + color + '}';
+        return ""+numeroIdentificador;
     }
 
     public  int distanciaRecorrida(){

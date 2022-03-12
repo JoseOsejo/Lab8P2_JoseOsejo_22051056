@@ -12,6 +12,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -33,7 +34,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         tipoAutoCB.addItem("Convertible");
         tipoAutoCB.addItem("Nascar");
         colorButton.setBackground(colorCorredor);
-        
+
     }
 
     /**
@@ -55,7 +56,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         largoLabel = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaCarrera = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -93,7 +94,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
 
         jLabel3.setText("Largo");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCarrera.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -102,18 +103,18 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(tablaCarrera);
+        if (tablaCarrera.getColumnModel().getColumnCount() > 0) {
+            tablaCarrera.getColumnModel().getColumn(0).setResizable(false);
+            tablaCarrera.getColumnModel().getColumn(1).setResizable(false);
+            tablaCarrera.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jButton3.setText("Usar Pista");
@@ -144,6 +145,11 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         jLabel6.setText("Numero Identificador");
 
         jButton7.setText("Agregar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Nombre Pista");
 
@@ -301,7 +307,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         ArrayList<Auto> listaAutos = manejoAuto.getListaAutos();
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         for (Auto auto : listaAutos) {
-            modelo.addElement(auto.getNumeroIdentificador());
+            modelo.addElement(auto);
         }
         autosCB.setModel(modelo);
     }
@@ -311,7 +317,9 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
                 largoPista = Integer.parseInt(largoPistaTF.getText());
                 largoLabel.setText(" " + largoPista);
                 pistaLabel.setText(nombrePistaTF.getText());
+                pistaExiste = true;
                 JOptionPane.showMessageDialog(null, "Se guardo la pista!");
+
             } else {
                 JOptionPane.showMessageDialog(null, "Tiene Rellenar los Campos");
             }
@@ -335,10 +343,9 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
     }
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
-
             ManejoAuto manejoAuto = new ManejoAuto(ruta);
             int numeroIdentificado = Integer.parseInt(numeroIdentificadorTF.getText());
-            if (nombreCorredorTF.getText().isEmpty() == false && numeroIdentificadorTF.getText().isEmpty() == false && numeroIdentificadorUnico(numeroIdentificado) == false) {
+            if (numeroIdentificadorUnico(numeroIdentificado) == false && nombreCorredorTF.getText().isEmpty() == false && numeroIdentificadorTF.getText().isEmpty() == false) {
                 Auto auto = null;
                 if (((String) tipoAutoCB.getSelectedItem()).equalsIgnoreCase("McQueen")) {
                     auto = new McQueen(numeroIdentificado, nombreCorredorTF.getText(), colorCorredor);
@@ -350,7 +357,7 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
                 manejoAuto.leerArchivoAuto();
                 manejoAuto.setAuto(auto);
                 manejoAuto.escribirArchivoAuto();
-            } else if (numeroIdentificadorTF.getText().isEmpty() == false && nombreCorredorTF.getText().isEmpty() == false && numeroIdentificadorUnico(numeroIdentificado) == true) {
+            } else if (numeroIdentificadorUnico(numeroIdentificado) == false && numeroIdentificadorTF.getText().isEmpty() == false && nombreCorredorTF.getText().isEmpty() == false == true) {
                 JOptionPane.showMessageDialog(null, "Ya existe el numero!");
             } else {
                 JOptionPane.showMessageDialog(null, "Completar los campos!");
@@ -363,6 +370,41 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
         nombreCorredorTF.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+    private boolean corredorExiste(Auto auto) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaCarrera.getModel();
+        int numeroTempoIdentificador = 0;
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            numeroTempoIdentificador = (Integer) modeloTabla.getValueAt(i,0);
+            if (numeroTempoIdentificador == auto.getNumeroIdentificador()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if (pistaExiste == true) {
+            if (autosCB.getSelectedIndex() >= 0) {
+                //casteo del objeto obtenido del combo box
+                Auto autoSeleccionado = (Auto) autosCB.getSelectedItem();
+                if (corredorExiste(autoSeleccionado) == false) {
+                    DefaultTableModel modeloTabla = (DefaultTableModel) tablaCarrera.getModel();
+                    Object[] nuevaRow = {
+                        autoSeleccionado.getNumeroIdentificador(),
+                        autoSeleccionado.getNombreCorredor(),
+                        autoSeleccionado.getDistanciaRecorrida()
+                    };
+                    modeloTabla.addRow(nuevaRow);
+                    tablaCarrera.setModel(modeloTabla);
+                    listaAutos.add(autoSeleccionado);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se agrego");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR!");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -418,16 +460,18 @@ public class Carreras extends javax.swing.JFrame implements Serializable {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel largoLabel;
     private javax.swing.JTextField largoPistaTF;
     private javax.swing.JTextField nombreCorredorTF;
     private javax.swing.JTextField nombrePistaTF;
     private javax.swing.JTextField numeroIdentificadorTF;
     private javax.swing.JLabel pistaLabel;
+    private javax.swing.JTable tablaCarrera;
     private javax.swing.JComboBox<String> tipoAutoCB;
     // End of variables declaration//GEN-END:variables
+    private boolean pistaExiste = false;
     private int largoPista = 0;
     private Color colorCorredor = Color.blue;
     private String ruta = "./autos.osj";
+    private ArrayList<Auto> listaAutos = new ArrayList();
 }

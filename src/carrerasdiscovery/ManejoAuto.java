@@ -60,7 +60,6 @@ public class ManejoAuto {
                         listaAutos.add(((Auto) o.readObject()));
                     }
                 }catch(EOFException e){
-                    // e.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                    JOptionPane.showMessageDialog(null, ex);
                 }
